@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:slide_widget/slide_controller.dart';
+import 'package:slide_widget/slide_options.dart';
 import 'package:slide_widget/slide_widget.dart';
 import 'package:slide_widget/slide_item.dart';
 
@@ -52,6 +54,15 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  SlideController _slideController = SlideController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    test();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -61,48 +72,69 @@ class _MyHomePageState extends State<MyHomePage> {
         itemCount: 20,
         itemBuilder: (context, index) {
           return SlideWidget(
+            controller: index == 0 ? _slideController : null,
             child: Container(
               color: Colors.red,
               child: SizedBox(
-                height: 100,
+                height: 60,
                 child: ListTile(
                   title: Text('item $index'),
                 ),
               ),
             ),
-            leading: <SlideItem>[
-              SlideItem(
-                color: Colors.blue,
-                size: Size(100, 100),
-                child: Text('leading')
-              ),
-              SlideItem(
-                color: Colors.green,
-                size: Size(100, 100),
-                child: Text('leading')
-              )
-            ],
-            trailing: <SlideItem>[
-              SlideItem(
-                color: Colors.grey,
-                size: Size(100, 100),
-                child: Align(alignment: Alignment.centerLeft,child: Text('trailing')),
-              ),
-              SlideItem(
-                color: Colors.cyan,
-                size: Size(100, 100),
-                child: GestureDetector(
-                  onTap: () {
-                    print('click icon');
-                  },
-                  child: Center(
-                    child: Icon(Icons.ac_unit, size: 60,),
-                  ),
+            options: SlideOptions(
+              leading: <SlideItem>[
+                SlideItem(
+                  color: Colors.blue,
+                  size: Size(60, 60),
+                  child: Text('leading')
                 ),
-              )
-            ],
+                SlideItem(
+                  color: Colors.green,
+                  size: Size(60, 60),
+                  child: Text('leading')
+                )
+              ],
+              trailing: <SlideItem>[
+                SlideItem(
+                  color: Colors.grey,
+                  size: Size(60, 60),
+                  child: Align(alignment: Alignment.centerLeft,child: Text('trailing')),
+                ),
+                SlideItem(
+                  color: Colors.grey,
+                  size: Size(60, 60),
+                  child: Align(alignment: Alignment.centerLeft,child: Text('trailing')),
+                ),
+                SlideItem(
+                  color: Colors.cyan,
+                  activeColor: Colors.amberAccent,
+                  size: Size(60, 60),
+                  child: GestureDetector(
+                    onTap: () {
+                      print('click icon');
+                    },
+                    child: Center(
+                      child: Icon(Icons.ac_unit, size: 60,),
+                    ),
+                  ),
+                )
+              ],
+            ),
           );
       }),
     );
+  }
+
+  test() {
+    // Future.delayed(Duration(seconds: 1), () {
+    //   _slideController.openLeading();
+    // });
+    Future.delayed(Duration(seconds: 2), () {
+      _slideController.expandTrailing();
+    });
+    // Future.delayed(Duration(seconds: 3), () {
+    //   _slideController.closeLeading();
+    // });
   }
 }

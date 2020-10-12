@@ -1,8 +1,7 @@
 name: slide_widget
-description: A new Flutter package project.
+description: a side menu of list item like in ios
 version: 0.0.1
-author:
-homepage:
+homepage: https://pub.wuruoye.com
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -10,6 +9,7 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
+  vibration: ^1.7.1
 
 dev_dependencies:
   flutter_test:
