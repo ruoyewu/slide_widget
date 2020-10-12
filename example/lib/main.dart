@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:slide_widget/slide_controller.dart';
+import 'package:slide_widget/slide_item.dart';
 import 'package:slide_widget/slide_options.dart';
 import 'package:slide_widget/slide_widget.dart';
-import 'package:slide_widget/slide_item.dart';
 
 void main() {
   runApp(MyApp());
@@ -30,7 +30,7 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: 'Slide Widget Demo'),
     );
   }
 }
@@ -67,74 +67,92 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.title),),
+      appBar: AppBar(
+        title: Text(widget.title),
+      ),
       body: ListView.builder(
-        itemCount: 20,
-        itemBuilder: (context, index) {
-          return SlideWidget(
-            controller: index == 0 ? _slideController : null,
-            child: Container(
-              color: Colors.red,
-              child: SizedBox(
-                height: 60,
-                child: ListTile(
-                  title: Text('item $index'),
+          itemCount: 20,
+          itemBuilder: (context, index) {
+            return SlideWidget(
+              controller: index == 5 ? _slideController : null,
+              child: Container(
+                // color: Colors.red,
+                child: SizedBox(
+                  height: 60,
+                  child: ListTile(
+                    title: Text('item $index'),
+                  ),
                 ),
               ),
-            ),
-            options: SlideOptions(
-              leading: <SlideItem>[
-                SlideItem(
-                  color: Colors.blue,
-                  size: Size(60, 60),
-                  child: Text('leading')
-                ),
-                SlideItem(
-                  color: Colors.green,
-                  size: Size(60, 60),
-                  child: Text('leading')
-                )
-              ],
-              trailing: <SlideItem>[
-                SlideItem(
-                  color: Colors.grey,
-                  size: Size(60, 60),
-                  child: Align(alignment: Alignment.centerLeft,child: Text('trailing')),
-                ),
-                SlideItem(
-                  color: Colors.grey,
-                  size: Size(60, 60),
-                  child: Align(alignment: Alignment.centerLeft,child: Text('trailing')),
-                ),
-                SlideItem(
-                  color: Colors.cyan,
-                  activeColor: Colors.amberAccent,
-                  size: Size(60, 60),
-                  child: GestureDetector(
-                    onTap: () {
-                      print('click icon');
-                    },
-                    child: Center(
-                      child: Icon(Icons.ac_unit, size: 60,),
-                    ),
+              options: SlideOptions(
+                enableLeadingExpand: false,
+                leading: <SlideItem>[
+                  SlideItem(
+                      color: Colors.blue,
+                      size: Size(60, 60),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text('leading'),
+                      )),
+                  SlideItem(
+                      color: Colors.green,
+                      size: Size(60, 60),
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text('leading'),
+                      ))
+                ],
+                trailing: <SlideItem>[
+                  SlideItem(
+                    color: Colors.grey,
+                    size: Size(60, 60),
+                    child: Align(
+                        alignment: Alignment.center, child: Text('trailing')),
                   ),
-                )
-              ],
-            ),
-          );
-      }),
+                  SlideItem(
+                    color: Colors.grey,
+                    size: Size(60, 60),
+                    child: Align(
+                        alignment: Alignment.center, child: Text('trailing')),
+                  ),
+                  SlideItem(
+                    color: Colors.cyan,
+                    activeColor: Colors.amberAccent,
+                    size: Size(60, 60),
+                    child: GestureDetector(
+                      onTap: () {
+                        print('click icon');
+                      },
+                      child: Center(
+                        child: Icon(
+                          Icons.ac_unit,
+                          size: 60,
+                        ),
+                      ),
+                    ),
+                  )
+                ],
+              ),
+            );
+          }),
     );
   }
 
   test() {
-    // Future.delayed(Duration(seconds: 1), () {
-    //   _slideController.openLeading();
-    // });
-    Future.delayed(Duration(seconds: 2), () {
-      _slideController.expandTrailing();
+    Future.delayed(Duration(seconds: 1), () {
+      _slideController.openLeading();
     });
-    // Future.delayed(Duration(seconds: 3), () {
-    //   _slideController.closeLeading();
-    // });
+    Future.delayed(Duration(seconds: 2), () {
+      _slideController.closeLeading();
+    });
+    Future.delayed(Duration(seconds: 3), () {
+      _slideController.openTrailing();
+    });
+    Future.delayed(Duration(seconds: 4), () {
+      _slideController.expandTrailing(duration: Duration(seconds: 1));
+    });
+    Future.delayed(Duration(seconds: 6), () {
+      _slideController.closeTrailing();
+    });
   }
 }
